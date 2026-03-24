@@ -9,7 +9,7 @@ from colorama import init
 # Custom Imports
 from utils.common import purple, white, red, input_with_esc
 from utils.functions.webhook import validate_webhook
-from utils.ui import title, print_header, page_webhook, page_nuker, page_discord
+from utils.ui import title, print_header, page_home, page_webhook, page_nuker, page_discord
 from utils.functions.nuker import bot
 from utils.functions.webhook import spammer, deleter, sender
 from utils.functions.discord import account
@@ -99,7 +99,7 @@ def main():
     if sys.stdout.encoding != 'utf-8':
         sys.stdout.reconfigure(encoding='utf-8')
     init(autoreset=True)
-    pages = ["DISCORD", "WEBHOOK", "NUKER"]
+    pages = ["HOME", "DISCORD", "WEBHOOK", "NUKER"]
     current_page = 0
     bot_running = False
     global discord_token, discord_username
@@ -111,10 +111,12 @@ def main():
         print_header(pages[current_page])
 
         if current_page == 0:
-            page_discord(discord_token is not None)
+            page_home()
         elif current_page == 1:
-            page_webhook()
+            page_discord(discord_token is not None)
         elif current_page == 2:
+            page_webhook()
+        elif current_page == 3:
             page_nuker(bot_running)
         
         # Custom prompt based on page
@@ -137,11 +139,14 @@ def main():
             print(choice) # Echo the number pressed
 
             if current_page == 0:
+                # Home - no options, just navigation
+                pass
+            elif current_page == 1:
                 # Discord page
                 handle_discord(choice)
-            elif current_page == 1 and choice in ['1', '2', '3']:
+            elif current_page == 2 and choice in ['1', '2', '3']:
                 handle_webhook(choice)
-            elif current_page == 2:
+            elif current_page == 3:
                 if bot_running:
                     if choice == '1':
                         # Stop Bot

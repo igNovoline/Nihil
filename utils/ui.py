@@ -4,15 +4,22 @@ from utils.common import purple, white
 
 def title():
     print(purple + Style.BRIGHT + """
-             
+        
         ███╗   ██╗██╗██╗  ██╗██╗██╗     
         ████╗  ██║██║██║  ██║██║██║     
         ██╔██╗ ██║██║███████║██║██║
         ██║╚██╗██║██║██╔══██║██║██║     
         ██║ ╚████║██║██║  ██║██║███████╗
         ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝╚══════╝
-    [ by novoline, use < or > to navigate ]
+    [ by novoline, use arrow keys to navigate ]
 """)
+    print(white + "Welcome to Nihil!")
+    print(white + "A multitool used to easily access discord and other applications\n")
+
+def page_home():
+    print(f"    {purple}[{white}1{purple}]{white} Discord")
+    print(f"    {purple}[{white}2{purple}]{white} Webhook")
+    print(f"    {purple}[{white}3{purple}]{white} Nuker")
 
 def print_header(page_name):
     try:
