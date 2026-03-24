@@ -8,9 +8,9 @@ from colorama import init
 
 # Custom Imports
 from utils.common import purple, white, red, input_with_esc, validate_webhook
-from utils.ui import title, print_header, page_discord, page_nuker
+from utils.ui import title, print_header, page_webhook, page_nuker
 from utils.functions.nuker import bot
-from utils.functions.discord import spammer, deleter, sender
+from utils.functions.webhook import spammer, deleter, sender
 
 def handle_discord(choice):
     while True:
@@ -50,7 +50,7 @@ def main():
         print_header(pages[current_page])
 
         if current_page == 0:
-            page_discord()
+            page_webhook()
         elif current_page == 1:
             page_nuker(bot_running)
         

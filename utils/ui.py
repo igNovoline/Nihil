@@ -7,10 +7,11 @@ def title():
              
         ███╗   ██╗██╗██╗  ██╗██╗██╗     
         ████╗  ██║██║██║  ██║██║██║     
-        ██╔██╗ ██║██║███████║██║██║     
+        ██╔██╗ ██║██║███████║██║██║
         ██║╚██╗██║██║██╔══██║██║██║     
         ██║ ╚████║██║██║  ██║██║███████╗
-        ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝╚══════╝                                                                            [ https://github.com/igNovoline/Nihil ]
+        ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝╚══════╝
+                [ by novoline ]
 """)
 
 def print_header(page_name):
@@ -22,7 +23,7 @@ def print_header(page_name):
     dashes = "─" * (max(0, width - prefix_len))
     print(f"{purple}[ {white}{page_name}{purple} ] {dashes}\n")
 
-def page_discord():
+def page_webhook():
     print(f"    {purple}[1]{white} Spam Webhook        {purple}| {purple}[3]{white} Send Message")
     print(f"    {purple}[2]{white} Delete Webhook")
 
