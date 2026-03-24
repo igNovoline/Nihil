@@ -34,3 +34,11 @@ def page_nuker(bot_running=False):
         print(f"\n{purple}[ Bot Running ]{white} Prefix: {purple}!{white}")
     else:
         print(f"    {purple}[1]{white} Start Bot")
+
+def page_discord(logged_in=False):
+    if not logged_in:
+        print(f"    {purple}[1]{white} Give Token")
+    else:
+        print(f"    {purple}[1]{white} Delete Friends      {purple}| {purple}[4]{white} Send Message")
+        print(f"    {purple}[2]{white} Delete DMs         {purple}| {purple}[5]{white} Change Token")
+        print(f"    {purple}[3]{white} Delete Servers")

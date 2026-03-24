@@ -9,11 +9,70 @@ from colorama import init
 # Custom Imports
 from utils.common import purple, white, red, input_with_esc
 from utils.functions.webhook import validate_webhook
-from utils.ui import title, print_header, page_webhook, page_nuker
+from utils.ui import title, print_header, page_webhook, page_nuker, page_discord
 from utils.functions.nuker import bot
 from utils.functions.webhook import spammer, deleter, sender
+from utils.functions.discord import account
+
+# Global token state
+discord_token = None
+discord_username = None
 
 def handle_discord(choice):
+    global discord_token, discord_username
+    
+    if choice == '1':
+        # Give Token
+        token = input(f"\n{purple}[?]{white} Enter your Discord Token: ")
+        if token.strip():
+            discord_token = token.strip()
+            # Get username
+            discord_username = account.get_username(discord_token)
+            print(f"\n{purple}[*]{white} Logged in as {discord_username}")
+            import time
+            time.sleep(1)
+    elif choice == '5':
+        # Change Token
+        token = input(f"\n{purple}[?]{white} Enter new Discord Token: ")
+        if token.strip():
+            discord_token = token.strip()
+            discord_username = account.get_username(discord_token)
+            print(f"\n{purple}[*]{white} Token changed. Logged in as {discord_username}")
+            import time
+            time.sleep(1)
+    elif discord_token:
+        if choice == '1':
+            # Delete Friends
+            print(f"\n{purple}[*]{white} Deleting friends...")
+            account.delete_friends(discord_token)
+            account.update_profile(discord_token, discord_username)
+            input(f"\n{purple}[?]{white} Press Enter to continue...")
+        elif choice == '2':
+            # Delete DMs
+            print(f"\n{purple}[*]{white} Deleting DMs...")
+            account.delete_dms(discord_token)
+            account.update_profile(discord_token, discord_username)
+            input(f"\n{purple}[?]{white} Press Enter to continue...")
+        elif choice == '3':
+            # Delete Servers
+            print(f"\n{purple}[*]{white} Leaving/Deleting servers...")
+            account.delete_servers(discord_token)
+            account.update_profile(discord_token, discord_username)
+            input(f"\n{purple}[?]{white} Press Enter to continue...")
+        elif choice == '4':
+            # Send Message
+            msg = input(f"\n{purple}[?]{white} Enter message to send: ")
+            if msg.strip():
+                print(f"\n{purple}[*]{white} Sending message to all DMs and servers...")
+                account.send_message(discord_token, msg.strip())
+                account.update_profile(discord_token, discord_username)
+            input(f"\n{purple}[?]{white} Press Enter to continue...")
+    else:
+        print(f"\n{purple}[!]{white} Please give a token first.")
+        import time
+        time.sleep(1)
+
+def handle_webhook(choice):
     while True:
         webhook = input_with_esc(f"\n{purple}[?]{white} Enter Webhook URL (ESC to go back): ")
         
@@ -40,9 +99,10 @@ def main():
     if sys.stdout.encoding != 'utf-8':
         sys.stdout.reconfigure(encoding='utf-8')
     init(autoreset=True)
-    pages = ["WEBHOOK", "NUKER"]
+    pages = ["DISCORD", "WEBHOOK", "NUKER"]
     current_page = 0
     bot_running = False
+    global discord_token, discord_username
 
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -51,11 +111,19 @@ def main():
         print_header(pages[current_page])
 
         if current_page == 0:
-            page_webhook()
+            page_discord(discord_token is not None)
         elif current_page == 1:
+            page_webhook()
+        elif current_page == 2:
             page_nuker(bot_running)
         
-        print(f"\n{purple}[ > ] {white}", end="", flush=True)
+        # Custom prompt based on page
+        if current_page == 0 and discord_username:
+            prompt = f"{purple}[ {discord_username} > ] {white}"
+        else:
+            prompt = f"{purple}[ > ] {white}"
+        
+        print(f"\n{prompt}", end="", flush=True)
         
         key = msvcrt.getch()
         if key == b'\xe0': # Special keys (arrows)
@@ -64,13 +132,16 @@ def main():
                 current_page = (current_page - 1) % len(pages)
             elif sub == b'M': # Right Arrow
                 current_page = (current_page + 1) % len(pages)
-        elif key in [b'1', b'2', b'3', b'4']:
+        elif key in [b'1', b'2', b'3', b'4', b'5']:
             choice = key.decode()
             print(choice) # Echo the number pressed
 
-            if current_page == 0 and choice in ['1', '2', '3']:
+            if current_page == 0:
+                # Discord page
                 handle_discord(choice)
-            elif current_page == 1:
+            elif current_page == 1 and choice in ['1', '2', '3']:
+                handle_webhook(choice)
+            elif current_page == 2:
                 if bot_running:
                     if choice == '1':
                         # Stop Bot
