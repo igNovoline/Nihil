@@ -94,56 +94,7 @@ def handle_webhook(choice):
         else:
             print(f"{red}[!]{white} Webhook unrecognised, try again.")
 
-def check_star():
-    """Check if user has starred the repo using GitHub API"""
-    import urllib.request
-    import json
-    
-    while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        title()
-        
-        print(f"\n{purple}[{white} Star {purple}]{white} https://github.com/igNovoline/Nihil {purple}[{white} to gain access {purple}]{white}\n")
-        
-        username = input(f"{purple}[{white} ? {purple}]{white} Enter your GitHub username: ")
-        
-        if not username.strip():
-            continue
-        
-        # Check if user has starred the repo
-        url = f"https://api.github.com/users/{username}/starred/igNovoline/Nihil"
-        
-        try:
-            req = urllib.request.Request(url)
-            req.add_header('Accept', 'application/vnd.github.v3+json')
-            with urllib.request.urlopen(req, timeout=10) as response:
-                if response.status == 200:
-                    print(f"\n{purple}[*]{white} Verified! Thank you for starring!")
-                    import time
-                    time.sleep(1)
-                    break
-                else:
-                    print(f"\n{purple}[!]{white} You haven't starred the repo yet!")
-                    print(f"{purple}[!]{white} Please star the repo and try again.")
-                    import time
-                    time.sleep(2)
-        except urllib.error.HTTPError as e:
-            if e.code == 404:
-                print(f"\n{purple}[!]{white} You haven't starred the repo yet!")
-                print(f"{purple}[!]{white} Please star the repo and try again.")
-            else:
-                print(f"\n{purple}[!]{white} Error checking star status: {e.reason}")
-            import time
-            time.sleep(2)
-        except Exception as e:
-            print(f"\n{purple}[!]{white} Error: {str(e)}")
-            import time
-            time.sleep(2)
-
 def main():
-    # Check if user starred the repo
-    check_star()
-    
     # Force standard output to use UTF-8 to support special characters like '─'
     if sys.stdout.encoding != 'utf-8':
         sys.stdout.reconfigure(encoding='utf-8')
