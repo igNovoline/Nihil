@@ -95,20 +95,50 @@ def handle_webhook(choice):
             print(f"{red}[!]{white} Webhook unrecognised, try again.")
 
 def check_star():
-    """Show star prompt and wait for user input"""
+    """Check if user has starred the repo using GitHub API"""
+    import urllib.request
+    import json
+    
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         title()
         
         print(f"\n{purple}[{white} Star {purple}]{white} https://github.com/igNovoline/Nihil {purple}[{white} to gain access {purple}]{white}\n")
         
-        choice = input(f"{purple}[{white} > {purple}]{white} Press Enter after starring the repo: ")
+        username = input(f"{purple}[{white} ? {purple}]{white} Enter your GitHub username: ")
         
-        # Simple check - just ask user to confirm
-        print(f"\n{purple}[*]{white} Thank you! Proceeding...")
-        import time
-        time.sleep(1)
-        break
+        if not username.strip():
+            continue
+        
+        # Check if user has starred the repo
+        url = f"https://api.github.com/users/{username}/starred/igNovoline/Nihil"
+        
+        try:
+            req = urllib.request.Request(url)
+            req.add_header('Accept', 'application/vnd.github.v3+json')
+            with urllib.request.urlopen(req, timeout=10) as response:
+                if response.status == 200:
+                    print(f"\n{purple}[*]{white} Verified! Thank you for starring!")
+                    import time
+                    time.sleep(1)
+                    break
+                else:
+                    print(f"\n{purple}[!]{white} You haven't starred the repo yet!")
+                    print(f"{purple}[!]{white} Please star the repo and try again.")
+                    import time
+                    time.sleep(2)
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                print(f"\n{purple}[!]{white} You haven't starred the repo yet!")
+                print(f"{purple}[!]{white} Please star the repo and try again.")
+            else:
+                print(f"\n{purple}[!]{white} Error checking star status: {e.reason}")
+            import time
+            time.sleep(2)
+        except Exception as e:
+            print(f"\n{purple}[!]{white} Error: {str(e)}")
+            import time
+            time.sleep(2)
 
 def main():
     # Check if user starred the repo
