@@ -7,7 +7,8 @@ import asyncio
 from colorama import init
 
 # Custom Imports
-from utils.common import purple, white, red, input_with_esc, validate_webhook
+from utils.common import purple, white, red, input_with_esc
+from utils.functions.webhook import validate_webhook
 from utils.ui import title, print_header, page_webhook, page_nuker
 from utils.functions.nuker import bot
 from utils.functions.webhook import spammer, deleter, sender
@@ -39,7 +40,7 @@ def main():
     if sys.stdout.encoding != 'utf-8':
         sys.stdout.reconfigure(encoding='utf-8')
     init(autoreset=True)
-    pages = ["DISCORD", "NUKER"]
+    pages = ["WEBHOOK", "NUKER"]
     current_page = 0
     bot_running = False
 
