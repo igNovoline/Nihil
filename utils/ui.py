@@ -21,7 +21,8 @@ def print_header(page_name):
         width = 80
     prefix_len = len(page_name) + 6
     dashes = "─" * (max(0, width - prefix_len))
-    print(f"{purple}[ {white}{page_name}{purple} ] {dashes}\n")
+    print(f"{purple}[ {white}{page_name}{purple} ] {dashes}")
+    print(f"{purple}[ {white}press < or > to navigate{purple} ]{white}")
 
 def page_webhook():
     print(f"    {purple}[1]{white} Spam Webhook        {purple}| {purple}[3]{white} Send Message")
@@ -29,8 +30,8 @@ def page_webhook():
 
 def page_nuker(bot_running=False):
     if bot_running:
-        print(f"    {purple}[1]{white} Stop Bot")
-        print(f"    {purple}[2]{white} Change Token      {purple}| {purple}[4]{white} Show Commands")
+        print(f"    {purple}[1]{white} Stop Bot          {purple}| {purple}[4]{white} Show Commands")
+        print(f"    {purple}[2]{white} Change Token")
         print(f"    {purple}[3]{white} Exit")
     else:
         print(f"    {purple}[1]{white} Start Bot")
