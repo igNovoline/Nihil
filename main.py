@@ -132,7 +132,7 @@ def main():
                 current_page = (current_page - 1) % len(pages)
             elif sub == b'M': # Right Arrow
                 current_page = (current_page + 1) % len(pages)
-        elif key in [b'1', b'2', b'3', b'4', b'5']:
+        elif key in [b'1', b'2', b'3', b'4', b'5', b'6']:
             choice = key.decode()
             print(choice) # Echo the number pressed
 
@@ -151,6 +151,21 @@ def main():
                         import time
                         time.sleep(1)
                     elif choice == '2':
+                        # Change Token
+                        token = input(f"\n{purple}[?]{white} Enter new Bot Token: ")
+                        if token.strip():
+                            bot.stop()
+                            bot.start(token.strip())
+                            print(f"\n{purple}[*]{white} Bot token changed.")
+                        import time
+                        time.sleep(1)
+                    elif choice == '3':
+                        # Exit
+                        if bot_running:
+                            bot.stop()
+                        print(f"\n{purple}[*]{white} Exiting...")
+                        sys.exit()
+                    elif choice == '4':
                         # Show Commands Guide
                         print(f"\n{purple}[=== COMMANDS GUIDE ===]{white}")
                         print(f"{purple}!delete{white} - Delete all channels")

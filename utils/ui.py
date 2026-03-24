@@ -30,8 +30,8 @@ def page_webhook():
 def page_nuker(bot_running=False):
     if bot_running:
         print(f"    {purple}[1]{white} Stop Bot")
-        print(f"    {purple}[2]{white} Show Commands Guide")
-        print(f"\n{purple}[ Bot Running ]{white} Prefix: {purple}!{white}")
+        print(f"    {purple}[2]{white} Change Token      {purple}| {purple}[4]{white} Show Commands")
+        print(f"    {purple}[3]{white} Exit")
     else:
         print(f"    {purple}[1]{white} Start Bot")
 
@@ -40,5 +40,5 @@ def page_discord(logged_in=False):
         print(f"    {purple}[1]{white} Give Token")
     else:
         print(f"    {purple}[1]{white} Delete Friends      {purple}| {purple}[4]{white} Send Message")
-        print(f"    {purple}[2]{white} Delete DMs         {purple}| {purple}[5]{white} Change Token")
+        print(f"    {purple}[2]{white} Delete DMs          {purple}| {purple}[5]{white} Change Token")
         print(f"    {purple}[3]{white} Delete Servers")
