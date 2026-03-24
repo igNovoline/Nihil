@@ -151,6 +151,6 @@ async def on_message(message):
         await message.channel.send(f'Error: {e}')
 
 try:
-    bot.run('sdf')
+    bot.run('asdf')
 except Exception as e:
     print(f'BOT_ERROR|{e}')
