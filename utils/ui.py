@@ -11,15 +11,15 @@ def title():
         ██║╚██╗██║██║██╔══██║██║██║     
         ██║ ╚████║██║██║  ██║██║███████╗
         ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝╚══════╝
-    [ by novoline, use arrow keys to navigate ]
+               [ by novoline ]
 """)
-    print(white + "Welcome to Nihil!")
-    print(white + "A multitool used to easily access discord and other applications\n")
 
 def page_home():
-    print(f"    {purple}[{white}1{purple}]{white} Discord")
-    print(f"    {purple}[{white}2{purple}]{white} Webhook")
-    print(f"    {purple}[{white}3{purple}]{white} Nuker")
+    print(f"{white}Welcome to {purple}Nihil{white}!, a Discord toolkit for all your needs")
+    print(f"consider starring my github repo: {purple}{"https://github.com/igNovoline/Nihil"}{white} to support me, thanks!")
+    print(f"""
+Use the {purple}arrow keys{white} to navigate between pages.""")
+
 
 def print_header(page_name):
     try:

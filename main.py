@@ -94,7 +94,26 @@ def handle_webhook(choice):
         else:
             print(f"{red}[!]{white} Webhook unrecognised, try again.")
 
+def check_star():
+    """Show star prompt and wait for user input"""
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        title()
+        
+        print(f"\n{purple}[{white} Star {purple}]{white} https://github.com/igNovoline/Nihil {purple}[{white} to gain access {purple}]{white}\n")
+        
+        choice = input(f"{purple}[{white} > {purple}]{white} Press Enter after starring the repo: ")
+        
+        # Simple check - just ask user to confirm
+        print(f"\n{purple}[*]{white} Thank you! Proceeding...")
+        import time
+        time.sleep(1)
+        break
+
 def main():
+    # Check if user starred the repo
+    check_star()
+    
     # Force standard output to use UTF-8 to support special characters like '─'
     if sys.stdout.encoding != 'utf-8':
         sys.stdout.reconfigure(encoding='utf-8')
