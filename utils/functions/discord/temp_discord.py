@@ -10,4 +10,4 @@ async def on_ready():
     print(f"USERNAME|{client.user.name}")
     await client.close()
 
-asyncio.run(client.start("sdfs"))
+asyncio.run(client.start("11"))

@@ -119,9 +119,9 @@ def main():
         
         # Custom prompt based on page
         if current_page == 0 and discord_username:
-            prompt = f"{purple}[ {discord_username} > ] {white}"
+            prompt = f"{purple}[ {white}{discord_username} {purple}]{white} > {white}"
         else:
-            prompt = f"{purple}[ > ] {white}"
+            prompt = f"{purple}[ {white}> {purple}]{white}"
         
         print(f"\n{prompt}", end="", flush=True)
         
